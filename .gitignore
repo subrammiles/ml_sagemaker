@@ -1,0 +1,12 @@
+# --- Spark/Parquet ignore ---
+*.parquet
+*.parquet/
+# Ignore Spark temporary directories and metadata
+.spark-staging-*
+_temporary/
+_spark_metadata/
+_SUCCESS
+
+# Optional: Ignore specific data folders if they exist
+# data/
+# output/
