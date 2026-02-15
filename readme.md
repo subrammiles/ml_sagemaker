@@ -31,19 +31,19 @@ ml_sagemaker/
 
 
 🔹 Local Training
-set PROJECT_NAME=a-simple-linear-regression
+set PROJECT_NAME=simple-linear-regression
 python scripts/train_local.py
 
 🔹 Local Inference
-set PROJECT_NAME=a-simple-linear-regression
+set PROJECT_NAME=simple-linear-regression
 python scripts/infer_local.py
 
 🔹 SageMaker Training
-set PROJECT_NAME=a-simple-linear-regression
+set PROJECT_NAME=simple-linear-regression
 set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
 python scripts/train_sagemaker.py
 
 🔹 SageMaker Deploy & Inference
-set PROJECT_NAME=a-simple-linear-regression
+set PROJECT_NAME=simple-linear-regression
 set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
 python scripts/deploy_sagemaker.py
