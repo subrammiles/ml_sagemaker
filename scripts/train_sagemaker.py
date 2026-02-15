@@ -1,18 +1,20 @@
 import os
 import sagemaker
 from sagemaker.estimator import Estimator
-import config
+
 import sys
 
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import config
 
 print("Running SageMaker training...")
 
 session = sagemaker.Session()
 region = session.boto_region_name
 
-role = os.environ.get("SAGEMAKER_ROLE_ARN")
+role = sagemaker.get_execution_role()
 PROJECT_NAME = os.environ.get("PROJECT_NAME", config.DEFAULT_PROJECT)
 
 if not role:
@@ -20,14 +22,14 @@ if not role:
 
 # Upload training data to S3
 s3_input_path = session.upload_data(
-    path=f"./{PROJECT_NAME}/data",
+    path=f"./projects/{PROJECT_NAME}/data",
     key_prefix=f"{PROJECT_NAME}/training-data"
 )
 
 # Create Estimator
 estimator = Estimator(
     entry_point="train.py",
-    source_dir=PROJECT_NAME,
+    source_dir=f"projects/{PROJECT_NAME}",
     role=role,
     instance_count=config.SAGEMAKER_INSTANCE_COUNT,
     instance_type=config.SAGEMAKER_INSTANCE_TYPE,

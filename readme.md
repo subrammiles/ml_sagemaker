@@ -31,7 +31,7 @@ ml_sagemaker/
 
 
 🔹 Local Training
-set PROJECT_NAME=simple-linear-regression
+export PROJECT_NAME=simple-linear-regression
 python scripts/train_local.py
 
 🔹 Local Inference
