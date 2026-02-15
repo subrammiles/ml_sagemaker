@@ -1,10 +1,6 @@
 import os
 
-# ===============================
-# Docker (Local Mode)
-# ===============================
 
-DOCKER_IMAGE_NAME = "ml-base"
 
 # ===============================
 # AWS / SageMaker
