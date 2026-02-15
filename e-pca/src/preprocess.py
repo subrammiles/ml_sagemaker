@@ -1,15 +1,18 @@
-import pandas as pd
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+import joblib
 
-def preprocess(data_path="data/customers.csv"):
+def preprocess():
 
-    data = pd.read_csv(data_path)
+    X = np.load("data/pca_raw.npy")
 
-    data_np = data.values.astype(np.float32)
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X).astype("float32")
 
-    np.save("data/customers.npy", data_np)
+    np.save("data/pca_scaled.npy", X_scaled)
+    joblib.dump(scaler, "data/scaler.pkl")
 
-    print("Preprocessing complete (float32 numpy saved)")
+    print("Preprocessing complete (scaled float32 saved)")
 
 if __name__ == "__main__":
     preprocess()

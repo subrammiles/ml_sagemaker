@@ -7,25 +7,25 @@ session = sagemaker.Session()
 role = sagemaker.get_execution_role()
 
 container = image_uris.retrieve(
-    framework="kmeans",
+    framework="pca",
     region=session.boto_region_name
 )
 
-kmeans = Estimator(
+pca = Estimator(
     image_uri=container,
     role=role,
     instance_count=1,
     instance_type="ml.m5.large",
-    output_path=f"s3://{config.S3_BUCKET}/unsupervised-kmeans/output",
+    output_path=f"s3://{config.S3_BUCKET}/pca-low-cost/output",
     sagemaker_session=session
 )
 
-kmeans.set_hyperparameters(
-    k=2,
-    feature_dim=2,
+pca.set_hyperparameters(
+    feature_dim=3,
+    num_components=1,
     mini_batch_size=5
 )
 
-kmeans.fit({
-    "train": f"s3://{config.S3_BUCKET}/unsupervised-kmeans/train/"
+pca.fit({
+    "train": f"s3://{config.S3_BUCKET}/pca-low-cost/train/"
 })

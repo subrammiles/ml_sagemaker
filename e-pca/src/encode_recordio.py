@@ -1,22 +1,12 @@
 import numpy as np
-import io
 import sagemaker.amazon.common as smac
 
 def encode():
 
-    data_np = np.load("data/customers.npy")
+    X = np.load("data/pca_scaled.npy")
 
-    buffer = io.BytesIO()
-
-    smac.write_numpy_to_dense_tensor(
-        buffer,
-        data_np
-    )
-
-    buffer.seek(0)
-
-    with open("data/customers.recordio", "wb") as f:
-        f.write(buffer.getvalue())
+    with open("data/pca_train.recordio", "wb") as f:
+        smac.write_numpy_to_dense_tensor(f, X)
 
     print("RecordIO file created")
 
