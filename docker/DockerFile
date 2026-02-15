@@ -4,9 +4,12 @@ WORKDIR /app
 
 ARG PROJECT_NAME
 
-COPY ${PROJECT_NAME}/requirements.txt .
+COPY projects/${PROJECT_NAME}/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ${PROJECT_NAME}/ .
+COPY projects/${PROJECT_NAME}/ .
 
-CMD ["python", "train.py"]
+ENV PYTHONUNBUFFERED=1
+
+ENTRYPOINT ["python"]
+CMD ["train.py"]

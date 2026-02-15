@@ -1,18 +1,49 @@
-# How To Run
-🔹 Local Mode
-set RUN_ENV=local
+# project
+
+ml_sagemaker/
+│
+├── docker/
+│   └── Dockerfile
+│
+├── projects/
+│   └── a-simple-linear-regression/
+│       ├── train.py
+│       ├── inference.py
+│       ├── requirements.txt
+│       └── data/
+│
+├── scripts/
+│   ├── train_local.py
+│   ├── train_sagemaker.py
+│   ├── infer_local.py
+│   └── deploy_sagemaker.py
+│
+└── config.py
+
+| Script              | Purpose                     |
+| ------------------- | --------------------------- |
+| train_local.py      | Train inside Docker locally |
+| train_sagemaker.py  | Train on SageMaker          |
+| inference.py        | Load model + predict        |
+| deploy_sagemaker.py | Deploy endpoint             |
+
+
+
+
+🔹 Local Training
 set PROJECT_NAME=a-simple-linear-regression
-python run.py
+python scripts/train_local.py
 
+🔹 Local Inference
 set PROJECT_NAME=a-simple-linear-regression
-python infer_local.py
+python scripts/infer_local.py
 
-
-🔹 AWS Mode
-
-Before running:
-
-set RUN_ENV=aws
+🔹 SageMaker Training
 set PROJECT_NAME=a-simple-linear-regression
 set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
-python run.py
+python scripts/train_sagemaker.py
+
+🔹 SageMaker Deploy & Inference
+set PROJECT_NAME=a-simple-linear-regression
+set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
+python scripts/deploy_sagemaker.py
