@@ -186,6 +186,7 @@ set RUN_ENV=local
 set PROJECT_NAME=a-simple-linear-regression
 python run.py
 
+
 🔹 AWS Mode
 
 Before running:
