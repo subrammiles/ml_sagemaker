@@ -24,3 +24,5 @@ __pycache__/
 
 # SageMaker / Jupyter temp files
 .ipynb_checkpoints/
+
+*.joblib
