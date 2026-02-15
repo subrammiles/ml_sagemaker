@@ -10,3 +10,17 @@ _SUCCESS
 # Optional: Ignore specific data folders if they exist
 # data/
 # output/
+.venv/
+
+# Python virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# SageMaker / Jupyter temp files
+.ipynb_checkpoints/
