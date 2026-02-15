@@ -1,35 +1,20 @@
-import os
-import sys
 import sagemaker
 from sagemaker.estimator import Estimator
 
+training_job_name = "your-training-job-name"
 
-# Add project root to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-import config
-
-session = sagemaker.Session()
-role = sagemaker.get_execution_role()
-
-training_job_name = os.environ.get("TRAINING_JOB_NAME")
-
-
-
-# Attach to completed training job
 estimator = Estimator.attach(training_job_name)
 
-
-# Deploy endpointv
 predictor = estimator.deploy(
     initial_instance_count=1,
     instance_type="ml.t2.medium"
 )
 
-predictor = estimator.deploy(
-    serverless_inference_config=serverless_config
-)
+response = predictor.predict({
+    "amount": 245.60,
+    "hour": 23,
+    "distance_km": 1200,
+    "txns_last_24h": 7
+})
 
-# Test prediction
-result = predictor.predict([[1200]])
-print("Prediction:", result)
+print(response)

@@ -23,5 +23,5 @@ def generate_data(n=5000):
 
 if __name__ == "__main__":
     df = generate_data()
-    df.to_csv("fraud_raw.csv", index=False)
+    df.to_csv("data/fraud_raw.csv", index=False)
     print("Data generated")

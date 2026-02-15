@@ -1,24 +1,20 @@
 # project
-
 ml_sagemaker/
 │
-├── docker/
-│   └── Dockerfile
-│
-├── projects/
-│   └── a-simple-linear-regression/
-│       ├── train.py
-│       ├── inference.py
-│       ├── requirements.txt
-│       └── data/
+├── src/
+│   ├── train.py
+│   ├── inference.py
+│   ├── preprocess.py
+│   └── data/
 │
 ├── scripts/
 │   ├── train_local.py
 │   ├── train_sagemaker.py
-│   ├── infer_local.py
 │   └── deploy_sagemaker.py
 │
 └── config.py
+
+
 
 | Script              | Purpose                     |
 | ------------------- | --------------------------- |
@@ -28,22 +24,23 @@ ml_sagemaker/
 | deploy_sagemaker.py | Deploy endpoint             |
 
 
+# HOW TO RUN LOCALLY 
+
+Step 1 — Generate data:
+
+python src/data_generator.py
 
 
-🔹 Local Training
-export PROJECT_NAME=simple-linear-regression
+Step 2 — Preprocess:
+
+python src/preprocess.py
+
+
+Step 3 — Train:
+
 python scripts/train_local.py
 
-🔹 Local Inference
-set PROJECT_NAME=simple-linear-regression
+
+Step 4 — Inference:
+
 python scripts/infer_local.py
-
-🔹 SageMaker Training
-set PROJECT_NAME=simple-linear-regression
-set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
-python scripts/train_sagemaker.py
-
-🔹 SageMaker Deploy & Inference
-set PROJECT_NAME=simple-linear-regression
-set SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT:role/YOUR_ROLE
-python scripts/deploy_sagemaker.py

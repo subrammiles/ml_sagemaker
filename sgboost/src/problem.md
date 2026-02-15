@@ -37,6 +37,5 @@ When a customer swipes their card ,Transaction service sends the following  data
 }
 
 
-# pre request
-python projects/sgboost/data_generator.py
+
 

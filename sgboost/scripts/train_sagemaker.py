@@ -1,48 +1,27 @@
-import os
 import sagemaker
 from sagemaker.estimator import Estimator
-
-import sys
-
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import config
 
-print("Running SageMaker training...")
-
-session = sagemaker.Session()
-region = session.boto_region_name
+sess = sagemaker.Session()
 
 role = sagemaker.get_execution_role()
-PROJECT_NAME = os.environ.get("PROJECT_NAME", config.DEFAULT_PROJECT)
 
-if not role:
-    raise ValueError("SAGEMAKER_ROLE_ARN environment variable not set")
-
-# Upload training data to S3
-s3_input_path = session.upload_data(
-    path=f"./projects/{PROJECT_NAME}/data",
-    key_prefix=f"{PROJECT_NAME}/training-data"
-)
-
-# Create Estimator
 estimator = Estimator(
     entry_point="train.py",
-    source_dir=f"projects/{PROJECT_NAME}",
+    source_dir="src",
     role=role,
-    instance_count=config.SAGEMAKER_INSTANCE_COUNT,
-    instance_type=config.SAGEMAKER_INSTANCE_TYPE,
+    instance_count=1,
+    instance_type="ml.m5.large",
     image_uri=sagemaker.image_uris.retrieve(
-        framework=config.FRAMEWORK_NAME,
-        region=region,
-        version=config.FRAMEWORK_VERSION
+        framework="xgboost",
+        region=sess.boto_region_name,
+        version="1.5-1"
     ),
-    sagemaker_session=session
+    output_path=f"s3://{config.S3_BUCKET}/fraud/output",
+    sagemaker_session=sess
 )
 
-# Start training job
-estimator.fit({"train": s3_input_path})
-
-print("SageMaker training job completed.")
-print("Model artifact stored at:", estimator.model_data)
+estimator.fit({
+    "train": f"s3://{config.S3_BUCKET}/fraud/train/",
+    "validation": f"s3://{config.S3_BUCKET}/fraud/validation/"
+})

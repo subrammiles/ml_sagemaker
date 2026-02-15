@@ -1,13 +1,6 @@
 import os
 
 # ===============================
-# General
-# ===============================
-
-DEFAULT_PROJECT = "a-simple-linear-regression"
-DEFAULT_ENV = "local"
-
-# ===============================
 # Docker (Local Mode)
 # ===============================
 

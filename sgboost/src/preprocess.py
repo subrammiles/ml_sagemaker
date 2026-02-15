@@ -1,11 +1,10 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+import joblib
 
 
-PROJECT_NAME = os.environ.get("PROJECT_NAME", config.DEFAULT_PROJECT)
-
-def preprocess(data_path="fraud_raw.csv"):
+def preprocess(data_path="data/fraud_raw.csv"):
 
     data = pd.read_csv(data_path)
 
@@ -40,9 +39,10 @@ def preprocess(data_path="fraud_raw.csv"):
         axis=1
     )
 
-    train_df.to_csv("train_xgb.csv", index=False, header=False)
-    test_df.to_csv("test_xgb.csv", index=False, header=False)
 
+    train_df.to_csv("data/train.csv", index=False, header=False)
+    test_df.to_csv("data/validation.csv", index=False, header=False)
+    joblib.dump(scaler, "data/scaler.pkl")
     print("Preprocessing complete")
 
 

@@ -1,31 +1,18 @@
-import os
 import subprocess
-import sys
+import os
 
-# Add project root to path BEFORE importing config
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+def run_local_training():
 
-import config
+    os.makedirs("local_model", exist_ok=True)
 
-PROJECT_NAME = os.environ.get("PROJECT_NAME", config.DEFAULT_PROJECT)
+    subprocess.run([
+        "python",
+        "src/train.py",
+        "--data-dir",
+        "data",
+        "--model-dir",
+        "local_model"
+    ], check=True)
 
-print("Running LOCAL training...")
-
-# Build Docker image
-subprocess.run([
-    "docker", "build",
-    "-t", config.DOCKER_IMAGE_NAME,
-    "-f", "docker/Dockerfile",
-    "--build-arg", f"PROJECT_NAME={PROJECT_NAME}",
-    "."
-], check=True)
-
-# Run container
-subprocess.run([
-    "docker", "run",
-    "--rm",
-    "-v", f"{os.getcwd()}/projects/{PROJECT_NAME}:/app",
-    config.DOCKER_IMAGE_NAME
-], check=True)
-
-print("Local training completed successfully.")
+if __name__ == "__main__":
+    run_local_training()
